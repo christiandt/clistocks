@@ -51,6 +51,4 @@ Latest change: 1.32 (0.59%)
   223.85  ┤               ╰──╯ ╰╯ 
   215.64  ┤                       
 
-
-Process finished with exit code 0
 ```
