@@ -8,8 +8,11 @@ sys.setdefaultencoding('utf8')
 
 class Security:
 
-    def __init__(self, symbol):
+    def __init__(self, symbol, type='Close'):
         # symbol = issueId on https://markets.ft.com/data/funds/
+        # type = Open, Close, High or Low
+        self.type = type.capitalize()
+
         data = {}
         data["days"] = 30
         data["dataNormalized"] = "false"
@@ -51,16 +54,16 @@ class Security:
         return self.api_data["Elements"][0]["Currency"]
 
     def latest_value(self):
-        return round(self.series['Close'][-1], 4)
+        return round(self.series[self.type][-1], 4)
 
     def latest_change(self):
-        return round(self.series['Close'][-1] - self.series['Close'][-2], 4)
+        return round(self.series[self.type][-1] - self.series[self.type][-2], 4)
 
     def latest_change_percentage(self):
-        return round((self.series['Close'][-1] - self.series['Close'][-2]) / self.series['Close'][-1] * 100, 2)
+        return round((self.series[self.type][-1] - self.series[self.type][-2]) / self.series[self.type][-1] * 100, 2)
 
     def chart(self, height=10):
-        return asciichartpy.plot(self.series['Close'], {"height": height})
+        return asciichartpy.plot(self.series[self.type], {"height": height})
 
     def __str__(self):
         result = "{}\n".format(self.name())
